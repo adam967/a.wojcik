@@ -86,30 +86,46 @@ End Google Tag Manager (noscript) -->
     </section>
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('contact-form');
-      const submitButton = document.getElementById('submit-button');
-      const emailField = document.getElementById('email');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
+  const submitButton = document.getElementById('submit-button');
+  const emailField = document.getElementById('email');
 
-      form.addEventListener('input', function () {
-        const name = document.getElementById('name').value;
-        const email = emailField.value;
-        const message = document.getElementById('message').value;
+  form.addEventListener('input', function () {
+    const name = document.getElementById('name').value;
+    const email = emailField.value;
+    const message = document.getElementById('message').value;
 
-        // Wyrażenie regularne do walidacji e-maila
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        // Sprawdź, czy wszystkie pola są wypełnione i e-mail jest poprawny
-        if (name.trim() !== '' && email.trim() !== '' && message.trim() !== '' && emailRegex.test(email)) {
-          submitButton.disabled = false;  // Aktywuj przycisk
-        } else {
-          submitButton.disabled = true;  // Dezaktywuj przycisk
-        }
-      });
+    if (name.trim() !== '' && email.trim() !== '' && message.trim() !== '' && emailRegex.test(email)) {
+      submitButton.disabled = false;
+    } else {
+      submitButton.disabled = true;
+    }
+  });
+
+  // 🔥 TU DODAJEMY EVENT
+  form.addEventListener('submit', function () {
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+      event: 'generate_lead',
+      form_id: '123',
+      Name: name,
+      Email: email,
+      Message: message
     });
 
-    </script>
+  });
+
+});
+</script>
 
     <!-- Contact Section -->
     <section class="contact-section">
@@ -202,6 +218,7 @@ End Google Tag Manager (noscript) -->
 </script>
 </body>
 </html>
+
 
 
 
