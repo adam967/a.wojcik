@@ -88,30 +88,41 @@ End Google Tag Manager (noscript) -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
   const form = document.getElementById('contact-form');
   const submitButton = document.getElementById('submit-button');
   const emailField = document.getElementById('email');
 
+  // WALIDACJA
   form.addEventListener('input', function () {
+
     const name = document.getElementById('name').value;
     const email = emailField.value;
     const message = document.getElementById('message').value;
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (name.trim() !== '' && email.trim() !== '' && message.trim() !== '' && emailRegex.test(email)) {
+    if (
+      name.trim() !== '' &&
+      email.trim() !== '' &&
+      message.trim() !== '' &&
+      emailRegex.test(email)
+    ) {
       submitButton.disabled = false;
     } else {
       submitButton.disabled = true;
     }
+
   });
 
-  // 🔥 TU DODAJEMY EVENT
-  form.addEventListener('submit', function () {
+  // GENERATE LEAD
+  form.addEventListener('submit', function (e) {
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    e.preventDefault(); // 🔥 blokuje GET i przeładowanie
+
+    const name = form.querySelector('#name').value;
+    const email = form.querySelector('#email').value;
+    const message = form.querySelector('#message').value;
 
     window.dataLayer = window.dataLayer || [];
     dataLayer.push({
@@ -121,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
       Email: email,
       Message: message
     });
+
+    console.log('generate_lead sent');
 
   });
 
@@ -218,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </body>
 </html>
+
 
 
 
